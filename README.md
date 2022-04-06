@@ -1,3 +1,28 @@
+## *tips & tricks*
+1. custom .env file
+
+get local ip
+```
+ip r
+```
+
+2. BUILD
+```
+make build
+```
+
+3. UP
+
+```
+make up
+```
+
+4. DOWN
+
+```
+make down
+```
+
 # Elastic stack (ELK) on Docker
 
 [![Elastic Stack version](https://img.shields.io/badge/Elastic%20Stack-8.1.2-00bfb3?style=flat&logo=elastic-stack)](https://www.elastic.co/blog/category/releases)

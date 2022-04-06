@@ -63,6 +63,7 @@ services:
     environment:
       LS_JAVA_OPTS: -Xmx256m -Xms256m
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+      KAFKA_IP: ${KAFKA_IP}
     networks:
       - elk
     depends_on:
@@ -83,6 +84,28 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - elk
+    ports:
+      - 2181:2181
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_IP}:9092
+      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.207.153.117:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - elk
+    ports:
+      - 9092:9092
 
 networks:
   elk:
